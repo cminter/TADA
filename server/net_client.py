@@ -10,17 +10,14 @@ import enum
 import net_common as nc
 import util
 
+# shortcut to common items
+# (also clarifies expected API to 'client')
 K = nc.K
 Mode = nc.Mode
+Cmd = nc.Cmd
 
 run_dir = 'run/client'
 net_dir = os.path.join(run_dir, 'net')
-
-@dataclass
-class Init(object):
-    id: str
-    key: str
-    protocol: int
 
 @dataclass
 class Login(object):
@@ -46,10 +43,6 @@ class Login(object):
             json.dump(self, jsonF, default=lambda o: {k: v for k, v
                     in o.__dict__.items() if v}, indent=4)
 
-@dataclass
-class Cmd(object):
-    text: str
-
 class Client(object):
     def __init__(self):
         self.user_id = None
@@ -66,7 +59,7 @@ class Client(object):
             try:
                 self.clientSocket.connect((self.host, self.port))
                 print(f"client connected ({self.host}:{self.port})")
-                self.clientSocket.sendall(nc.toJSONB(Init(**init_params)))
+                self.clientSocket.sendall(nc.toJSONB(nc.Init(**init_params)))
                 self.active = True
                 while self.active:
                     request = nc.fromJSONB(self.clientSocket.recv(1024))

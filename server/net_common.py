@@ -114,6 +114,16 @@ class User(object):
     def delete(self):
         os.remove(User._json_path(self.id))
 
+@dataclass
+class Init(object):
+    id: str
+    key: str
+    protocol: int
+
+@dataclass
+class Cmd(object):
+    text: str
+
 class Test(object):
     server_port = 5001
     id = 'testing'

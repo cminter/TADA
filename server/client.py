@@ -6,7 +6,6 @@ import net_client
 import common
 
 K = common.K
-#Mode1 = common.Mode1
 Cmd = net_client.Cmd
 
 default_prompt = 'TADA> '
